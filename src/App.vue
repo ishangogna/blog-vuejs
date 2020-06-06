@@ -1,12 +1,12 @@
 <template>
-  <test-component></test-component>
+  <add-blog></add-blog>
 </template>
 
 <script>
-import Test from './components/test'
+import addBlog from './components/addBlog.vue'
 export default {
   components:{
-    'test-component':Test,
+    'add-blog':addBlog,
   },
   name: 'app',
   data () {
