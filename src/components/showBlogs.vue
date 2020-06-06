@@ -3,8 +3,9 @@
         <h1>All Blog Articles</h1>
         <input class = "search-bar" type="text" placeholder="Search a blog" v-model="search">
         <div v-for="blog in filteredBlogs" :key='blog' class="single-blog">
-            <h2 v-rainbow>{{blog.title | to-uppercase}}</h2>
-            <article>{{blog.body | snippet }}</article>
+            <router-link v-bind:to= "'/blog/' + blog.id"><h2>{{blog.title | to-uppercase}}</h2></router-link>
+            
+            <article>{{blog.content | snippet }}</article>
         </div>
     </div>
 </template>
@@ -15,6 +16,7 @@ export default {
         return {
             blogs : [],
             search : '',
+            id : '',
         }
     },
 
@@ -28,10 +30,16 @@ export default {
     },
 
     created: function(){
-        this.$http.get('https://jsonplaceholder.typicode.com/posts').then(function(data){
-            console.log(data);
-            this.blogs = data.body.slice(0,10);
+        this.$http.get('https://blog-vuejs-7f931.firebaseio.com/posts.json').then(function(data){
+            return data.json(); //to parse the data to json. This returns a promise.
 
+        }).then(function(data){
+            var blogsArray = [];
+            for(let key in data){
+                data[key].id = key;
+                blogsArray.push(data[key]);
+            }
+            this.blogs = blogsArray;
         })
     },
     filters:{
@@ -70,5 +78,8 @@ export default {
 .search-bar{
     width:790px;
     
+}
+a{
+    text-decoration: none;
 }
 </style>
