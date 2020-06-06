@@ -1,26 +1,25 @@
 import Vue from 'vue'
 import App from './App.vue'
 import VueResouse from 'vue-resource'
+import VueRouter from 'vue-router'
+import Routes from './routes'
 
+
+// Using vue-resourse package for making HTTP Requests
 Vue.use(VueResouse);
 
-//Custom Directives
-Vue.directive('rainbow',{
-  bind: function(el,binding,vnode){
-    el.style.color = "#" + Math.random().toString().slice(2,8);
-  }
+// Using vue-router package to set up routing
+Vue.use(VueRouter);
+const router = new VueRouter({
+  routes: Routes,
+  mode: 'history',
+
+
 });
-
-//Custom Filters
-Vue.filter('to-uppercase',function(value){
-  return value.toUpperCase();
-})
-
-Vue.filter('snippet',function(value){
-  return value.slice(0,100) + '...';
-})
 
 new Vue({
   el: '#app',
-  render: h => h(App)
+  render: h => h(App),
+  router: router
+
 })

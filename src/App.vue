@@ -1,5 +1,5 @@
 <template>
-  <show-blogs></show-blogs>
+  <router-view></router-view>
 </template>
 
 <script>
